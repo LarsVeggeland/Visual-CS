@@ -205,34 +205,6 @@ function assignBucket(bar, amount_of_buckets) {
 
 
 
-//<--Bar object-->
-
-/**
- * Any bar object holds two fields, its value and position in the bars array
- */
-class Bar {
-    /**
-     * 
-     * @param {number} value 
-     * @param {number} position 
-     */
-    constructor(value, position) {
-        this.value = value;
-        this.position = position;
-    }
-    
-    /**
-     * Compares this and another Bar object based on it's value
-     * @param {Bar} other 
-     * @returns 0 if this equals other, 1 if this is is greater and -1 if this is lesser
-     */
-    compareTo(other) {
-        return 1 * (this.value > other.value) + -1 * (this.value < other.value) + 0;
-    }
-}
-
-
-
 //<--Sorting section-->
 
 /**
@@ -268,9 +240,7 @@ function bubbleSort() {
 }
 
 /**
- * Sorts bars using the insertion sort algorithm.
- * start defaults to 0 and end defaults to bars.lenght.
- * Range provided by parameters is inclusive/inclusive
+ * Sorts array using the insertion sort algorithm.
  * Helper determines whether performance metrics is to be written to the document
  * @param {Array<number>} array
  * @param {boolean} helper
@@ -358,7 +328,7 @@ function mergeSort() {
 }
 
 /**
-* Helper function for merge sorting two sections of an array
+* Helper function for merging two sections of an array
 * @param {Array<Bar>} array 
 * @param {Array} temp 
 * @param {number} lStart 
@@ -405,34 +375,6 @@ function mergeHalves(array, temp, lStart, rEnd) {
     return operations;
  }
 
-/**
- * Sorts bars array using the Timsort algorithm
- */
-function timSort() {
-    var operations = 0;
-    var run = 2;
-    /**
-     * 
-     * @param {Array<Bar>} array 
-     * @param {number} start
-     * @param {number} end
-     */
-    function sort(array, temp, start, end) {
-        if (end - start <= run) {
-            console.log("Run too small\n","Start:", start, "\nEnd: ", end);
-            insertionSort(start, end + (end-start));
-            return;
-        }
-        middle = Math.floor((start+end)/2);
-        console.log("Start:", start, "\nMiddle: ", middle, "\nEnd: ", end);
-        sort(array, temp, start, middle);
-        sort(array, temp, middle+1, end);
-        console.log("Merging: ", `mergeHalves(${start}, ${end})`);
-        mergeHalves(array, temp, start, end);
-    }
-    sort(bars, getTempArray(bars), 0, bars.length-1);
-    redrawBars();
-}
 
 /**
  * Sorts bars array using the quick sort algorithm 
@@ -479,13 +421,6 @@ function quickSort() {
     giveResult(operations);
     giveAlgo("Quick sort");
     redrawBars();
-}
-
-function radixSort() {
-    bars.forEach(bar => {
-
-    }
-    )
 }
 
 /**
