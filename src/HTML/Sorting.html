@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+  <head>
+    <link rel="stylesheet" href="../Style/Sorting.css">
+    <meta charset="utf-8">
+    <title>Sorting</title>
+  </head>
+
+  <body>
+     
+      <div class="mainFrame">
+
+        <div class="inputStack">
+
+          <div class="inputRow">
+            <label for="X">Give number of elements</label>
+            <input type="number" name="X" value="" id="randomBars">
+          </div>
+
+          <div class="inputRow">
+            <button type="button" name="randomValues"  onclick="applyRandomBars()">Add some values</button>
+          </div>
+
+          <div class="inputRow">
+            <button type="button" name="removeBars"  onclick="removeBars()">Remove values</button>
+          </div>
+
+          <div class="inputRow">
+            <p>Pick algorithm</p>
+          </div>
+
+          <div class="inputRow">
+            <button type="button" name="Bubble sort" onclick="bubbleSort()">Bubble sort</button>
+          </div>
+          
+          <div class="inputRow">
+            <button type="button" name="Insertion sort" onclick="insertionSort()">Insertion sort</button>
+          </div>
+
+           <div class="inputRow">
+            <button type="button" name="Selection sort" onclick="selectionSort()">Selection sort</button>
+          </div>
+
+           <div class="inputRow">
+            <button type="button" name="Merge sort" onclick="mergeSort()">Merge sort</button>
+          </div>
+
+           <div class="inputRow">
+            <button type="button" name="Heap sort" onclick="heapSort()">Heap sort</button>
+          </div>
+
+           <div class="inputRow">
+            <button type="button" name="Tim sort" onclick="timSort()">Tim sort</button>
+          </div>
+
+          <div class="inputRow">
+            <button type="button" name="Quick sort" onclick="quickSort()">Quick sort</button>
+          </div>
+
+           <div class="inputRow">
+            <button type="button" name="Counting sort" onclick="countingSort()">Counting sort</button>
+          </div>
+
+          <div class="inputRow">
+            <button type="button" name="Bucket sort" onclick="bucketSort()">Bucket sort</button>
+          </div>
+
+        </div>
+
+        <canvas id="myCanvas" width="800" height="600"></canvas>
+
+        <div class="resultFrame">
+          <h5 id="algo"></h5>
+          <h5 id="Worst Case">Worst Case:<h5>
+          <h5 id="result">Result:</h5>
+          <h5 id="time">Time:</h5>
+        </div>
+
+      </div>
+  </body>
+  <footer>
+    </script>
+    <script src="../JS/Sorting.js">
+
+    </script>
+  </footer>
+
+</html>

@@ -1,0 +1,53 @@
+body {
+	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+
+.mainFrame {
+  margin-top: 5%;
+  text-align: center;
+  height: 60%;
+  width: 100%;
+  margin-bottom: 100px;
+}
+
+.subFrame1 {
+  padding: 5% 5%;
+  background-color: #5d7db0;
+  opacity: 60%;
+  border-style: black solid 20px;
+  border-radius: 10px;
+  display: inline-block;
+  text-align: center;
+}
+
+.inputSection {
+  text-align: center;
+}
+
+button{
+  display: block;
+  margin: 50px;
+  border-radius: 2px;
+  width: 80%;
+  opacity: 100%;
+  text-align: center;
+}
+
+h1, h4 {
+  text-align: center;
+}

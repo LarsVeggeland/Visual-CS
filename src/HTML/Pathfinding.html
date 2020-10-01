@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="stylesheet" href="../Style/PathFinding.css">
+    <meta charset="utf-8">
+    <title>Pathfinding</title>
+  </head>
+
+  <body>
+     
+      <div class="mainFrame">
+
+        <ul class="inputStack">
+
+          <div class="inputRow">
+            <label for="X">Give number of rows</label>
+            <input type="number" name="X" value="" id="provX">
+          </div>
+
+          <div class="inputRow">
+            <label for="Y">Give number of cols</label>
+            <input type="number" name="Y" value="" id="provY">
+          </div>
+
+          <div class="inputRow">
+            <button type="button" name="button" onclick="makeOwnGrid()">Draw</button>
+          </div>
+
+          <div class="inputRow">
+            <button type="button" name="randomSqr" onclick="someSquares(15)">Add Random Squares</button>
+          </div>
+
+          <div class="inputRow">
+            <p>Pick algorithm</p>
+          </div>
+
+          <div class="inputRow">
+            <button type="button" name="Djikstra" onclick="">Djikstra's</button>
+          </div>
+
+          <div class="inputRow">
+            <button type="button" name="A*" onclick="">A*</button>
+          </div>
+
+        </ul>
+
+        <div class="canvasFrame">
+          <canvas id="myCanvas" width="600" height="600"></canvas>
+        </div>
+
+    </div>
+  </body>
+  <footer>
+    </script>
+    <script src="../JS/Pathfinding.js">
+
+    </script>
+  </footer>
+</html>
