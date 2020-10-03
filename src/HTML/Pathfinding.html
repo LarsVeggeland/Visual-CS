@@ -10,7 +10,7 @@
      
       <div class="mainFrame">
 
-        <ul class="inputStack">
+        <div class="inputStack">
 
           <div class="inputRow">
             <label for="X">Give number of rows</label>
@@ -31,6 +31,24 @@
           </div>
 
           <div class="inputRow">
+            <label for="startPos">Give start coordinate x, y</label>
+            <input type="text" name="startPos" value="" id="startPos">
+          </div>
+
+          <div class="inputRow">
+            <label for="goalPos">Give goal coordinate x, y</label>
+            <input type="text" name="goalPos" value="" id="goalPos">
+          </div>
+
+          <div class="inputRow">
+            <button type="button" name="setStartNode" onclick="setStartNode()">Set start node</button>
+          </div>
+
+          <div class="inputRow">
+            <button type="button" name="setGoalNode" onclick="setGoalNode()">Set goal node</button>
+          </div>
+
+          <div class="inputRow">
             <p>Pick algorithm</p>
           </div>
 
@@ -42,7 +60,7 @@
             <button type="button" name="A*" onclick="">A*</button>
           </div>
 
-        </ul>
+        </div>
 
         <div class="canvasFrame">
           <canvas id="myCanvas" width="600" height="600"></canvas>
