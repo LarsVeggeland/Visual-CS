@@ -217,13 +217,6 @@ function arePointsDiagonal(xStart, yStart, xEnd, yEnd){
 }
 
 
-
-//--Logic Section--
-
-function isTileAvailable(x, y) {
-  return grid[x][y].isAvailable;
-}
-
 //-- Main --
 function start() {
   make(40, 40);
