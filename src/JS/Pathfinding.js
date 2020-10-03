@@ -1,12 +1,16 @@
-//import {Grid, Tile, Hello, hello} from "./Logic.js";
-
-//--Drawing Section-- 
+//<--Variables-->
 
 const myCanvas = document.getElementById("myCanvas");
 const ctx = myCanvas.getContext("2d");
 const ctxWidth = 600;
 const ctxHeight = 600;
 let grid = [];
+var startNode = null;
+var goalNode = null;
+
+
+
+//<--Drawing Section--> 
 
 function drawGrid(rows, cols) {
   myCanvas.setAttribute("width", ctxWidth);
@@ -52,10 +56,11 @@ function make(x, y) {
  * @param {number} x 
  * @param {number} y 
  * @param {string} color 
+ * @param {boolean} walkable
  */
-function drawSquare(x, y, color="green") {
+function drawSquare(x, y, color="black", walkable=false) {
   if (grid[x][y].walkable == true)  {
-    grid[x][y].walkable = false;
+    grid[x][y].walkable = walkable;
     ctx.fillStyle = color;
     ctx.fillRect(window.alpha*x, window.beta*y, window.alpha, window.beta);
   }
@@ -73,20 +78,11 @@ function someSquares(amount) {
     var col = makeRandomInt(0, y);
     var row = makeRandomInt(0, x);
     var col = makeRandomInt(0, y);
-    drawSquare(row, col, "black");
+    drawSquare(row, col,);
     grid[row][col].walkable = false;
   }
 }
 
-/**
- * Provides a random integer in the range provided (inclusive, inclusive)
- * @param {number} lower 
- * @param {number} upper 
- */
-function makeRandomInt(lower, upper) {
-  let seed = Math.random();
-  return Math.ceil(seed * (upper - lower - 1) + lower - 1);
-}
 
 function fillHorizontalLine(xStart, xEnd, y) {
   //should call checkHrzLineAvailable() before being used
@@ -148,6 +144,16 @@ function fillDiagonalLine(xStart, yStart, xEnd, yEnd) {
 
 
 //--Utils Section--
+
+/**
+ * Provides a random integer in the range provided (inclusive, inclusive)
+ * @param {number} lower 
+ * @param {number} upper 
+ */
+function makeRandomInt(lower, upper) {
+  let seed = Math.random();
+  return Math.ceil(seed * (upper - lower - 1) + lower - 1);
+}
 
 function checkHrzLineAvailable(xStart, xEnd, y) {
   //returns false an x value where tile is occupied, if occupied
@@ -216,12 +222,6 @@ function arePointsDiagonal(xStart, yStart, xEnd, yEnd){
   return (xEnd - xStart) === (yEnd - yStart); 
 }
 
-
-//-- Main --
-function start() {
-  make(40, 40);
-}
-
 function makeOwnGrid(){
   let x = document.getElementById("provX").value;
   let y = document.getElementById("provY").value;
@@ -229,12 +229,42 @@ function makeOwnGrid(){
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  start();
+  make(40, 40);
 }, false);
 
+/**
+ * 
+ * @param {String} input
+ */
+function parseCoordinate(input) {
+  input.trim();
+  if (input.includes(",")) {
+    let coordinate = []
+    let commaPos = input.indexOf(",");
+    coordinate.push(Number.parseInt(input.substring(0, commaPos)));
+    coordinate.push(Number.parseInt(input.substring(commaPos+1)));
+    if (coordinate.includes(NaN)) {
+      alert(`${input} is invalid, must use the format x, y`);
+      return NaN;
+    }
+    let x = coordinate[0];
+    let y = coordinate[1];
+
+    if (x < 0 || x > 39 || y < 0 || y > 39) {
+      alert("Position provided is outside the grid");
+      return NaN;
+    }
+
+    return coordinate;
+  }
+  else {
+    alert(`${aux} is invalid, must use the format (x, y)`);
+  }
+  
+}
 
 
-//-- Pathfinding --
+//<--Pathfinding-->
 
 /**
  * A class for creating vertex objects used in pathfinding algorithms.
@@ -300,5 +330,45 @@ class Vertex {
   setLastVertex(lastVertex) {
     this.lastVertex = lastVertex;
   }
+
+  /**
+   * Uncolors the vertex whilst redrawing the removed lines from the grid
+   */
+  uncolor() {
+    //TODO 
+  }
 }
+
+
+
+//<--User interaction-->
+
+function setStartNode() {
+  let input = document.getElementById("startPos").value;
+  let position = parseCoordinate(input);
+  xPos = position[0];
+  yPos = position[1];
+  drawSquare(xPos, yPos, "yellow", true);
+  //Temporary:
+  if (startNode != null) {
+    drawSquare(startNode.x, startNode.y, " #f4ebfa", true);
+  }
+  startNode = grid[xPos][yPos];
+}
+
+function setGoalNode() {
+  let input = document.getElementById("goalPos").value;
+  let position = parseCoordinate(input);
+  xPos = position[0];
+  yPos = position[1];
+  drawSquare(xPos, yPos, "orange", true);
+  //Temporary:
+  if (goalNode != null) {
+    drawSquare(goalNode.x, goalNode.y, " #f4ebfa", true);
+  }
+  goalNode = grid[xPos][yPos];
+}
+
+
+
 
