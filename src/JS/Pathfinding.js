@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 /**
  * A class for creating vertex objects used in pathfinding algorithms.
- * Each object has a x and y position
+ * Each object has a x and y position and a boolean attribute declaring its walkability
  */
 class Vertex {
   /**
@@ -290,13 +290,13 @@ class Vertex {
          yPos < 0 || yPos >= (ctxHeight/window.beta) + 1) {
            continue;
          }
-        let vertex = new Vertex(xPos, yPos);
-        if (Vertex.equals(this, vertex)){
+        if (this.x == xPos && this.y == yPos){
           continue;
         }
-        neighbours.push(vertex);
+        neighbours.push([xPos, yPos]);
       }
     }
+    console.log(neighbours);
     return neighbours;
   }
 
