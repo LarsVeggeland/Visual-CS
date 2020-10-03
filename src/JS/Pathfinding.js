@@ -4,21 +4,18 @@
 
 const myCanvas = document.getElementById("myCanvas");
 const ctx = myCanvas.getContext("2d");
-const ctxWidth = 600 //document.documentElement.clientWidth * 0.9;
-const ctxHeight = 600 //document.documentElement.clientHeight * 0.9;
+const ctxWidth = 600;
+const ctxHeight = 600;
 let grid = [];
 
-//const height = window.innerHeight;
-//const width = window.innerWidth;
-
-function drawGrid(rows, cols){
+function drawGrid(rows, cols) {
   myCanvas.setAttribute("width", ctxWidth);
   myCanvas.setAttribute("height", ctxHeight);
   var rowPos = 0;
   for (var i = 0; i < rows; i++) {
     ctx.beginPath();
     ctx.lineWidth = 0.5;
-    ctx.stroleStyle = "black";
+    ctx.strokeStyle = "black";
     ctx.moveTo(0, rowPos);
     ctx.lineTo(ctxWidth, rowPos);
     ctx.stroke();
@@ -28,7 +25,7 @@ function drawGrid(rows, cols){
   for (var i = 0; i < cols; i++) {
     ctx.beginPath();
     ctx.lineWidth = 0.5;
-    ctx.stroleStyle = "black";
+    ctx.strokeStyle = "black";
     ctx.moveTo(colPos, 0);
     ctx.lineTo(colPos, ctxWidth);
     ctx.stroke();
@@ -43,7 +40,7 @@ function make(x, y) {
   for(var i = 0; i < x; i++){
     var row = [];
     for(var j = 0; j < y; j++){
-      row.push(0);
+      row.push(new Vertex(i, j));
     }
     grid.push(row);
   }
@@ -57,13 +54,11 @@ function make(x, y) {
  * @param {string} color 
  */
 function drawSquare(x, y, color="green") {
-  //if (grid[x][y] != 0)  throw new Exception();
-  grid[x][y] = 1;
-  console.log(x, y);
-  ctx.beginPath();
-  ctx.fillStyle = color;
-  ctx.fillRect(window.alpha*x, window.beta*y, window.alpha, window.beta);
-  ctx.stroke();
+  if (grid[x][y].walkable == true)  {
+    grid[x][y].walkable = false;
+    ctx.fillStyle = color;
+    ctx.fillRect(window.alpha*x, window.beta*y, window.alpha, window.beta);
+  }
 }
 
 /**
@@ -76,20 +71,10 @@ function someSquares(amount) {
   for (var i = 0; i < amount; i++){
     var row = makeRandomInt(0, x);
     var col = makeRandomInt(0, y);
-    try {
-      var row = makeRandomInt(0, x);
-      var col = makeRandomInt(0, y);
-      drawSquare(row, col, "blue");
-    }
-    catch(Exception){
-      console.log("Yup");
-      try {
-        drawSquare(row, col, "#75c3f0");
-      }
-      catch(Exception){
-        
-      }
-    }
+    var row = makeRandomInt(0, x);
+    var col = makeRandomInt(0, y);
+    drawSquare(row, col, "black");
+    grid[row][col].walkable = false;
   }
 }
 
@@ -106,10 +91,10 @@ function makeRandomInt(lower, upper) {
 function fillHorizontalLine(xStart, xEnd, y) {
   //should call checkHrzLineAvailable() before being used
   //@params inclusive, exlusive
-  if (xStart === xEnd){
+  if (xStart === xEnd) {
     throw new  Exception("There must be range, i,e, start must != end");
   }
-  if (xStart > xEnd){
+  if (xStart > xEnd) {
     var temp = xStart;
     xStart = xEnd;
     xEnd = temp;
@@ -159,6 +144,7 @@ function fillDiagonalLine(xStart, yStart, xEnd, yEnd) {
     }
   }
 }
+
 
 
 //--Utils Section--
@@ -230,6 +216,8 @@ function arePointsDiagonal(xStart, yStart, xEnd, yEnd){
   return (xEnd - xStart) === (yEnd - yStart); 
 }
 
+
+
 //--Logic Section--
 
 function isTileAvailable(x, y) {
@@ -241,7 +229,6 @@ function start() {
   make(40, 40);
 }
 
-
 function makeOwnGrid(){
   let x = document.getElementById("provX").value;
   let y = document.getElementById("provY").value;
@@ -251,6 +238,7 @@ function makeOwnGrid(){
 document.addEventListener('DOMContentLoaded', function() {
   start();
 }, false);
+
 
 
 //-- Pathfinding --
@@ -270,6 +258,7 @@ class Vertex {
     this.y = yPos;
     this.lastVertex = null;
     this.distance = null;
+    this.walkable = true;
   }
 
   /**
@@ -312,20 +301,6 @@ class Vertex {
   }
 
   /**
-   * @returns {number} this.x
-   */
-  getX() {
-    return this.x;
-  }
-
-   /**
-   * @returns {number} this.y
-   */
-  getY() {
-    return this.y;
-  }
-
-  /**
    * 
    * @param {Vertex} lastVertex 
    */
@@ -334,82 +309,3 @@ class Vertex {
   }
 }
 
-class Pathfindding {
-
-  /**
-   * 
-   * @param {Vertex} startPosistion 
-   * @param {Vertex} endPosition 
-   */
-  constructor(startPosistion, endPosition){
-    const x = (ctxWidth/window.alpha) + 1;
-    const y = (ctxHeight/window.beta) + 1;
-    this.start = startPosistion;
-    this.end = endPosition;
-    this.visited = [];
-    /*
-    Probably uneccesary...
-    this.unvisited = [];
-    for(var i = 0; i < x; i++) {
-      var row = [];
-      for (var j = 0; j < y; j++) {
-        row.push(new Vertex(i, j));
-      }
-      this.unvisited.push(row);
-    }
-    
-  }
-
-  getUnvisited() {
-    this.unvisited.forEach(element => {
-      element.forEach(point =>{
-        console.log(point);
-      })
-    });
-    console.log(this.unvisited);*/
-  }
-}
-
-
-
-//-- Dijkstra --
-
-/**
- * 
- */
-class Dijkstra extends Pathfindding {
-  /**
-   * 
-   * @param {Vertex} startPosistion 
-   * @param {Vertex} endPosition 
-   */
-  constructor(startPosistion, endPosition) {
-    super(startPosistion, endPosition);
-  }
-
-  /**
-   * 
-   */
-  beginPathfinding() {
-    this.start.distance = 0;
-    this.visited.push(this.start);
-    drawSquare(this.start.getX(), this.start.getY(), "purple");
-    drawSquare(this.end.getX(), this.end.getY(), "blue");
-
-  }
-  /**
-   * Checks if the element is in the visited array
-   * @param {Vertex} vertex 
-   * @param {number} index
-   * @returns {boolean} true if vertex is found, false otherwise
-   */
-  vertexVisited(vertex, index = 0) {
-    for (var i= index; i < this.visited.length; i++) {
-      if (Vertex.equals(vertex, this.visited[i])) {
-        return true;
-      }
-    }
-    return false;
-  }
- 
-}
