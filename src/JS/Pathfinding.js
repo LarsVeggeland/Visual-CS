@@ -385,3 +385,27 @@ function setGoalNode() {
   }
   goalNode = grid[xPos][yPos];
 }
+
+/**
+ * Finds the shortest walkable path from the start node to the goal node using best first search
+ */
+function astar() {
+
+  /**
+   * Finds the euclidian distance between the goal node and node
+   * @param {Vertex} node
+   * @returns {number}
+   */
+  function h_cost(node) {
+    return Math.sqrt(Math.pow(node.x - goalNode.x, 2) + Math.pow(node.y - goalNode.y, 2));
+  }
+
+  /**
+   * Finds an estimate for the total distance of the path from the start node, through node, to the goal node
+   * @param {Vertex} node 
+   * @returns {number}
+   */
+  function f_cost(node) {
+    return node.distance + h_cost(node);
+  }
+}
