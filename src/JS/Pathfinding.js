@@ -258,7 +258,7 @@ function parseCoordinate(input) {
     return coordinate;
   }
   else {
-    alert(`${aux} is invalid, must use the format (x, y)`);
+    alert(`${input} is invalid, must use the format (x, y)`);
   }
   
 }
@@ -335,7 +335,25 @@ class Vertex {
    * Uncolors the vertex whilst redrawing the removed lines from the grid
    */
   uncolor() {
-    //TODO 
+
+    drawSquare(this.x, this.y, "#f4ebfa", true);
+
+    ctx.lineWidth = 0.5;
+    ctx.beginPath();
+
+    ctx.moveTo(this.x*window.alpha, this.y*window.beta);
+    ctx.lineTo((this.x+1)*window.alpha, this.y*window.beta);
+
+    ctx.moveTo(this.x*window.alpha, (this.y+1)*window.beta);
+    ctx.lineTo((this.x+1)*window.alpha, (this.y+1)*window.beta);
+
+    ctx.moveTo(this.x*window.alpha, this.y*window.beta);
+    ctx.lineTo(this.x*window.alpha, (this.y+1)*window.beta);
+
+    ctx.moveTo((this.x+1)*window.alpha, this.y*window.beta);
+    ctx.lineTo((this.x+1)*window.alpha, (this.y+1)*window.beta);
+
+    ctx.stroke();
   }
 }
 
@@ -350,8 +368,8 @@ function setStartNode() {
   yPos = position[1];
   drawSquare(xPos, yPos, "yellow", true);
   //Temporary:
-  if (startNode != null) {
-    drawSquare(startNode.x, startNode.y, " #f4ebfa", true);
+  if (startNode instanceof Vertex) {
+    startNode.uncolor();
   }
   startNode = grid[xPos][yPos];
 }
@@ -362,13 +380,8 @@ function setGoalNode() {
   xPos = position[0];
   yPos = position[1];
   drawSquare(xPos, yPos, "orange", true);
-  //Temporary:
-  if (goalNode != null) {
-    drawSquare(goalNode.x, goalNode.y, " #f4ebfa", true);
+  if (goalNode instanceof Vertex) {
+    goalNode.uncolor();
   }
   goalNode = grid[xPos][yPos];
 }
-
-
-
-
