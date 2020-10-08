@@ -44,25 +44,40 @@ function make(x, y) {
   for(var i = 0; i < x; i++){
     var row = [];
     for(var j = 0; j < y; j++){
-      row.push(new Vertex(i, j));
+      let node = new Vertex(i, j);
+      row.push(node);
+      drawSquare(node);
     }
     grid.push(row);
   }
-  drawGrid(x, y);
+  //drawGrid(x, y);
 }
 
 /**
- * Draws a square in the grid at the specified position with the provided color
- * @param {number} x 
- * @param {number} y 
- * @param {string} color 
- * @param {boolean} walkable
+ * Draws a square in the grid at the specified position with the provided calculated color
+ * @param {Vertex} node 
  */
-function drawSquare(x, y, color="black", walkable=false) {
-  if (grid[x][y].walkable == true)  {
-    grid[x][y].walkable = walkable;
-    ctx.fillStyle = color;
-    ctx.fillRect(window.alpha*x, window.beta*y, window.alpha, window.beta);
+function drawSquare(node) {
+    ctx.fillStyle = getSquareColor(node);
+    ctx.fillRect(window.alpha*node.x, window.beta*node.y, window.alpha, window.beta);
+}
+
+/**
+ * Calculates the shade of blue for a vertex based on its walkability
+ * @param {Vertex} node 
+ * @returns {String} rgba(0, 0, proper shade of blue)
+ */
+function getSquareColor(node) {
+  switch (node.walkability) {
+
+    case Infinity:
+      return "black";
+
+    case 0:
+      return "orange";
+
+    default:
+      return `rgb(${255 - (node.walkability-1)*27}, ${255 - 15*node.walkability}, 255)`;
   }
 }
 
@@ -76,11 +91,9 @@ function someSquares(amount) {
   for (var i = 0; i < amount; i++){
     var row = makeRandomInt(0, x);
     var col = makeRandomInt(0, y);
-    var row = makeRandomInt(0, x);
-    var col = makeRandomInt(0, y);
-    drawSquare(row, col,);
     grid[row][col].walkable = false;
     grid[row][col].walkability = Infinity;
+    drawSquare(grid[row][col]);
   }
 }
 
