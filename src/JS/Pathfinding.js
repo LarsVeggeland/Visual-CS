@@ -80,6 +80,7 @@ function someSquares(amount) {
     var col = makeRandomInt(0, y);
     drawSquare(row, col,);
     grid[row][col].walkable = false;
+    grid[row][col].walkability = Infinity;
   }
 }
 
