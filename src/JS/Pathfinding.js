@@ -388,12 +388,14 @@ function setStartNode() {
   let position = parseCoordinate(input);
   xPos = position[0];
   yPos = position[1];
-  drawSquare(xPos, yPos, "yellow", true);
-  //Temporary:
-  if (startNode instanceof Vertex) {
-    startNode.uncolor();
+  let node = grid[xPos][yPos];
+  node.walkability = 0;
+  if (startNode instanceof Vertex && startNode != node) {
+    startNode.walkability = Vertex.createWalkability();
+    drawSquare(startNode);
   }
-  startNode = grid[xPos][yPos];
+  drawSquare(node);
+  startNode = node;
 }
 
 function setGoalNode() {
@@ -401,10 +403,13 @@ function setGoalNode() {
   let position = parseCoordinate(input);
   xPos = position[0];
   yPos = position[1];
-  drawSquare(xPos, yPos, "orange", true);
-  if (goalNode instanceof Vertex) {
-    goalNode.uncolor();
+  let node = grid[xPos][yPos];
+  node.walkability = 0;
+  if (goalNode instanceof Vertex && getSquareColor != node) {
+    goalNode.walkability = Vertex.createWalkability();
+    drawSquare(goalNode);
   }
+  drawSquare(node);
   goalNode = grid[xPos][yPos];
 }
 
