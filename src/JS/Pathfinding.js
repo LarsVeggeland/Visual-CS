@@ -282,6 +282,7 @@ class Vertex {
     this.lastVertex = null;
     this.distance = null;
     this.walkable = true;
+    this.walkability = Vertex.createWalkability();
   }
 
   /**
@@ -291,6 +292,13 @@ class Vertex {
    */
   static equals(obj1, obj2) {
     return obj1.x === obj2.x && obj1.y === obj2.y; 
+  }
+
+  /**
+   * @returns {number} between 1 and 10
+   */
+  static createWalkability() {
+    return makeRandomInt(1, 10);
   }
 
   /**
