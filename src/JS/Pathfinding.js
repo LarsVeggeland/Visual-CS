@@ -63,6 +63,16 @@ function drawSquare(node) {
 }
 
 /**
+ * Functions just like drawSquare with the exception of the ability to set a new color
+ * @param {Vertex} node 
+ * @param {String} color 
+ */
+function drawSquareAndOverrideColor(node, color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(window.alpha*node.x, window.beta*node.y, window.alpha, window.beta);
+}
+
+/**
  * Calculates the shade of blue for a vertex based on its walkability
  * @param {Vertex} node 
  * @returns {String} rgba(0, 0, proper shade of blue)
@@ -155,8 +165,15 @@ function fillDiagonalLine(xStart, yStart, xEnd, yEnd) {
   }
 }
 
-
-
+/**
+ * Draws the path, i.e, the vertecies in the array with a green color
+ * @param {Array<Vertex>} path
+ */
+function drawPath(path) {
+  path.forEach(vertex => {
+    drawSquareAndOverrideColor(vertex, "green");
+  });
+}
 //--Utils Section--
 
 /**
@@ -426,7 +443,7 @@ function astar() {
   function h_cost(node) {
     return Math.sqrt(Math.pow(node.x - goalNode.x, 2) + Math.pow(node.y - goalNode.y, 2));
   }
-
+  
   /**
    * Finds an estimate for the total distance of the path from the start node, through node, to the goal node
    * @param {Vertex} node 
@@ -435,4 +452,23 @@ function astar() {
   function f_cost(node) {
     return node.distance + h_cost(node);
   }
+
+  /**
+   * Returns the child node with the lowest estimated distance to the goal node
+   * @param {Vertex} node 
+   */
+  function best_child_node(node) {
+    let children =  node.getNeihbours();
+    let best_child;
+  
+    
+  }
+
+  let open = [startNode];
+  let closed  = [];
+
+  while (open.length > 0) {
+    
+  }
+
 }
